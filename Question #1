@@ -1,0 +1,16 @@
+try:
+    # Get the file name from the user
+    file_name = input("Enter the file name: ")
+
+    # Try to open the file
+    with open(file_name, 'r') as file:
+        # Read and convert each line to uppercase
+        for line in file:
+            uppercase_line = line.upper()
+            print(uppercase_line, end='')
+
+except FileNotFoundError:
+    print(f"Error: The file '{file_name}' does not exist.")
+
+except Exception as e:
+    print(f"An error occurred: {e}")
