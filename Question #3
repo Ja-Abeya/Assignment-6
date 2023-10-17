@@ -1,0 +1,41 @@
+def read_file(file_name):
+    try:
+        with open(file_name, 'r') as file:
+            return file.readlines()
+    except FileNotFoundError:
+        print(f"Error: The file '{file_name}' does not exist.")
+        return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+def process_confidence(lines):
+    total_confidence = 0
+    count = 0
+
+    for line in lines:
+        if line.startswith("X-DSPAM-Confidence:"):
+            try:
+                confidence = float(line.split(":")[1])
+                total_confidence += confidence
+                count += 1
+            except ValueError:
+                print(f"Error: Invalid confidence value on line - {line}")
+
+    return total_confidence, count
+
+def main():
+    file_name = input("Enter the file name: ")
+    lines = read_file(file_name)
+
+    if lines is not None:
+        total_confidence, count = process_confidence(lines)
+
+        if count > 0:
+            average_confidence = total_confidence / count
+            print(f"Average confidence: {average_confidence:.4f}")
+        else:
+            print("No valid confidence values found in the file.")
+
+if __name__ == "__main__":
+    main()
