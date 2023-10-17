@@ -1,0 +1,27 @@
+# Initialize an empty list to store the hostnames
+hostnames = []
+
+# Open the mbox.txt file for reading
+try:
+    with open("mbox.txt", "r") as file:
+        for line in file:
+            if line.startswith("From:"):
+                # Extract the email address
+                email = line.split()[1]
+                # Split the email address to get the hostname
+                username, hostname = email.split("@")
+                # Append the hostname to the list
+                hostnames.append(hostname)
+
+    # Print the unique hostnames and the count
+    unique_hostnames = set(hostnames)
+    print("Unique hostnames:")
+    for hostname in unique_hostnames:
+        print(hostname)
+
+    print(f"Number of unique hosts: {len(unique_hostnames)}")
+
+except FileNotFoundError:
+    print("Error: The 'mbox.txt' file does not exist.")
+except Exception as e:
+    print(f"An error occurred: {e}")
